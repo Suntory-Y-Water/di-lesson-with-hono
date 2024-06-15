@@ -5,6 +5,7 @@ export interface IPostService {
   getPost(id: number): Promise<Post>;
   getAllPosts(): Promise<Post[]>;
   createPost(post: PostCreate): Promise<Post>;
+  search(keyword: string, posts: Post[]): Post[] | null;
 }
 
 export class PostService implements IPostService {
@@ -24,5 +25,9 @@ export class PostService implements IPostService {
 
   createPost(post: PostCreate): Promise<Post> {
     return this.postRepository.createPost(post);
+  }
+
+  search(keyword: string, posts: Post[]): Post[] | null {
+    return this.postRepository.searchPosts(keyword, posts);
   }
 }

@@ -4,6 +4,7 @@ export interface IPostRepository {
   findPost(id: number): Promise<Post>;
   findAllPosts(): Promise<Post[]>;
   createPost(post: PostCreate): Promise<Post>;
+  searchPosts(keyword: string, post: Post[]): Post[] | null;
 }
 
 export class PostRepository implements IPostRepository {
@@ -21,7 +22,7 @@ export class PostRepository implements IPostRepository {
   async findAllPosts(): Promise<Post[]> {
     const response = await fetch(this.apiUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch post `);
+      throw new Error(`Failed to fetch post`);
     }
     const data = (await response.json()) as Post[];
     return data;
@@ -42,5 +43,16 @@ export class PostRepository implements IPostRepository {
     }
     const data = (await response.json()) as Post;
     return data;
+  }
+
+  // タイトルまたは投稿内容に特定のキーワードを含むポストを検索する
+  searchPosts(keyword: string, posts: Post[]): Post[] | null {
+    const searchResult = posts.filter((post) => {
+      return post.title.includes(keyword) || post.body.includes(keyword);
+    });
+    if (searchResult.length === 0) {
+      return null;
+    }
+    return searchResult;
   }
 }
