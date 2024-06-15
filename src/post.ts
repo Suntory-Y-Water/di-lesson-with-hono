@@ -1,4 +1,6 @@
-// post.ts
+export class PostCreate {
+  constructor(public title: string, public body: string, public userId: number) {}
+}
 export class Post {
   constructor(
     public userId: number,
