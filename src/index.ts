@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { DIContainer } from './di-container';
-import { DependencyTypes, diContainer } from './di-config';
+import { DIContainer } from './diContainer';
+import { DependencyTypes, diContainer } from './diConfig';
 import { PostCreate } from './post';
 
 const app = new Hono<{

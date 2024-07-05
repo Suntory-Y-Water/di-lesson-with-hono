@@ -1,4 +1,4 @@
-import { DIContainer } from './di-container';
+import { DIContainer } from './diContainer';
 
 class Foo {
   name: string;

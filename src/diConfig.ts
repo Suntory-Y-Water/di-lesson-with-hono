@@ -1,6 +1,6 @@
-import { IPostService, PostService } from './post-service';
-import { DIContainer } from './di-container';
-import { IPostRepository, PostRepository } from './post-repository';
+import { IPostService, PostService } from './postService';
+import { DIContainer } from './diContainer';
+import { IPostRepository, PostRepository } from './postRepository';
 
 export interface DependencyTypes {
   PostService: IPostService;

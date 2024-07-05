@@ -1,5 +1,5 @@
 import { Post, PostCreate } from './post';
-import { IPostRepository } from './post-repository';
+import { IPostRepository } from './postRepository';
 
 export interface IPostService {
   getPost(id: number): Promise<Post>;
