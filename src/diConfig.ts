@@ -1,18 +1,12 @@
+import 'reflect-metadata';
+import { Container } from 'inversify';
 import { IPostService, PostService } from './postService';
-import { DIContainer } from './diContainer';
 import { IPostRepository, PostRepository } from './postRepository';
+import { TYPES } from './types';
 
-export interface DependencyTypes {
-  PostService: IPostService;
-  PostRepository: IPostRepository;
-}
+const diContainer = new Container();
 
-const diContainer = new DIContainer<DependencyTypes>();
-
-// Register repositories
-diContainer.register('PostRepository', PostRepository);
-
-// Register services
-diContainer.register('PostService', PostService, diContainer.get('PostRepository'));
+diContainer.bind<IPostService>(TYPES.PostService).to(PostService);
+diContainer.bind<IPostRepository>(TYPES.PostRepository).to(PostRepository);
 
 export { diContainer };

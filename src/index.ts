@@ -1,51 +1,46 @@
 import { Hono } from 'hono';
-import { DIContainer } from './diContainer';
-import { DependencyTypes, diContainer } from './diConfig';
+import { diContainer } from './diConfig';
 import { PostCreate } from './post';
+import { TYPES } from './types';
+import { IPostService } from './postService';
 
 const app = new Hono<{
   Variables: {
-    diContainer: DIContainer<DependencyTypes>;
+    diContainer: typeof diContainer;
+    postService: IPostService;
   };
 }>();
 
 app.use('*', (c, next) => {
+  const postService = diContainer.get<IPostService>(TYPES.PostService);
   c.set('diContainer', diContainer);
+  c.set('postService', postService);
   return next();
 });
 
 app.get('/posts/:id', async (c) => {
-  const di = c.get('diContainer');
   const id = parseInt(c.req.param('id'));
-
-  const postService = di.get('PostService');
+  const postService = c.get('postService');
   const post = await postService.getPost(id);
-
   return c.json(post);
 });
 
 app.get('/posts', async (c) => {
-  const di = c.get('diContainer');
-
-  const postService = di.get('PostService');
+  const postService = c.get('postService');
   const post = await postService.getAllPosts();
 
   return c.json(post);
 });
 
 app.post('/posts', async (c) => {
-  const di = c.get('diContainer');
   const request = await c.req.json<PostCreate>();
-  const postService = di.get('PostService');
+  const postService = c.get('postService');
   const post = await postService.createPost(request);
   return c.json(post);
 });
 
-// http://127.0.0.1:8787/search?keyword=doloremにアクセスすると、正しく取得できていた。
 app.get('/search', async (c) => {
-  const di = c.get('diContainer');
-
-  const postService = di.get('PostService');
+  const postService = c.get('postService');
   const post = await postService.getAllPosts();
   const query = c.req.query('keyword');
   if (!query) {
