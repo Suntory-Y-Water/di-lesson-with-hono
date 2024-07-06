@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { diContainer } from './diConfig';
 import { PostCreate } from './post';
-import { TYPES } from './types';
 import { IPostService } from './postService';
+import { injectDependencies } from './middleware/injectDependencies';
 
 const app = new Hono<{
   Variables: {
@@ -11,12 +11,7 @@ const app = new Hono<{
   };
 }>();
 
-app.use('*', (c, next) => {
-  const postService = diContainer.get<IPostService>(TYPES.PostService);
-  c.set('diContainer', diContainer);
-  c.set('postService', postService);
-  return next();
-});
+app.use('*', injectDependencies);
 
 app.get('/posts/:id', async (c) => {
   const id = parseInt(c.req.param('id'));
