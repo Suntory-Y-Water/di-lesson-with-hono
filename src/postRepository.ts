@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { injectable } from 'inversify';
 import { Post, PostCreate } from './post';
 
 export interface IPostRepository {
@@ -6,6 +8,7 @@ export interface IPostRepository {
   createPost(post: PostCreate): Promise<Post>;
 }
 
+@injectable()
 export class PostRepository implements IPostRepository {
   private readonly apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 

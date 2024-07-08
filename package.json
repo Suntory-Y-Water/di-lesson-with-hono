@@ -6,10 +6,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "hono": "^4.4.6"
+    "hono": "^4.4.6",
+    "inversify": "^6.0.2",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/inversify": "^2.0.33",
     "vitest": "^1.6.0",
     "wrangler": "^3.57.2"
   }

@@ -1,5 +1,8 @@
+import 'reflect-metadata';
+import { injectable, inject } from 'inversify';
 import { Post, PostCreate } from './post';
-import { IPostRepository } from './post-repository';
+import { IPostRepository } from './postRepository';
+import { TYPES } from './types';
 
 export interface IPostService {
   getPost(id: number): Promise<Post>;
@@ -8,12 +11,9 @@ export interface IPostService {
   search(keyword: string, posts: Post[]): Post[] | null;
 }
 
+@injectable()
 export class PostService implements IPostService {
-  private postRepository: IPostRepository;
-
-  constructor(postRepository: IPostRepository) {
-    this.postRepository = postRepository;
-  }
+  constructor(@inject(TYPES.PostRepository) private postRepository: IPostRepository) {}
 
   getPost(id: number): Promise<Post> {
     return this.postRepository.findPost(id);
