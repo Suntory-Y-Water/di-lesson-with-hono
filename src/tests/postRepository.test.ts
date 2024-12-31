@@ -1,4 +1,5 @@
 import { mockDiContainer } from '../mocks/mockDiConfig';
+import { createPostId } from '../post';
 import { IPostRepository } from '../postRepository';
 import { TYPES } from '../types';
 
@@ -10,7 +11,8 @@ describe('PostRepository', () => {
   });
 
   test('should find a post by id', async () => {
-    const post = await postRepository.findPost(1);
+    const postId = createPostId(1);
+    const post = await postRepository.findPost(postId);
     expect(post).toEqual({
       id: 1,
       userId: 1,
@@ -43,6 +45,7 @@ describe('PostRepository', () => {
   });
 
   test('should throw an error if post not found', async () => {
-    await expect(postRepository.findPost(999)).rejects.toThrow('Post not found');
+    const postId = createPostId(999);
+    await expect(postRepository.findPost(postId)).rejects.toThrow('Post not found');
   });
 });

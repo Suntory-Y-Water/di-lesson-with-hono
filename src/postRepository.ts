@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { Post, PostCreate } from './post';
+import { Post, PostCreate, PostId } from './post';
 
 export interface IPostRepository {
-  findPost(id: number): Promise<Post>;
+  findPost(id: PostId): Promise<Post>;
   findAllPosts(): Promise<Post[]>;
   createPost(post: PostCreate): Promise<Post>;
 }
@@ -12,7 +12,7 @@ export interface IPostRepository {
 export class PostRepository implements IPostRepository {
   private readonly apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
-  async findPost(id: number): Promise<Post> {
+  async findPost(id: PostId): Promise<Post> {
     const response = await fetch(`${this.apiUrl}/${id}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch post with id ${id}`);

@@ -1,5 +1,5 @@
 import { IPostService, PostService } from '../postService';
-import { PostCreate } from '../post';
+import { createPostId, PostCreate } from '../post';
 import { IPostRepository } from '../postRepository';
 import { TYPES } from '../types';
 import { mockDiContainer } from '../mocks/mockDiConfig';
@@ -14,7 +14,8 @@ describe('PostService', () => {
   });
 
   test('should get a post by id', async () => {
-    const post = await postService.getPost(1);
+    const postId = createPostId(1);
+    const post = await postService.getPost(postId);
     expect(post).toEqual({
       id: 1,
       userId: 1,
