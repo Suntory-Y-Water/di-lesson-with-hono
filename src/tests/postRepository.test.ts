@@ -1,12 +1,11 @@
-import { mockDiContainer } from '../mocks/mockDiConfig';
 import { IPostRepository } from '../postRepository';
-import { TYPES } from '../types';
+import { MockPostRepository } from '../mocks/mockPostRepository';
 
 describe('PostRepository', () => {
   let postRepository: IPostRepository;
 
   beforeEach(() => {
-    postRepository = mockDiContainer.get<IPostRepository>(TYPES.PostRepository);
+    postRepository = new MockPostRepository();
   });
 
   test('should find a post by id', async () => {

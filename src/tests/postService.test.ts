@@ -1,15 +1,14 @@
 import { IPostService, PostService } from '../postService';
 import { PostCreate } from '../post';
 import { IPostRepository } from '../postRepository';
-import { TYPES } from '../types';
-import { mockDiContainer } from '../mocks/mockDiConfig';
+import { MockPostRepository } from '../mocks/mockPostRepository';
 
 describe('PostService', () => {
   let postService: IPostService;
   let mockPostRepository: IPostRepository;
 
   beforeEach(() => {
-    mockPostRepository = mockDiContainer.get<IPostRepository>(TYPES.PostRepository);
+    mockPostRepository = new MockPostRepository();
     postService = new PostService(mockPostRepository);
   });
 
