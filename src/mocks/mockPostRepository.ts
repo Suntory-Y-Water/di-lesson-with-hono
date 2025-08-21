@@ -1,9 +1,6 @@
-import 'reflect-metadata';
-import { injectable } from 'inversify';
-import { IPostRepository } from '../../src/postRepository';
-import { Post, PostCreate } from '../../src/post';
+import { IPostRepository } from '../postRepository';
+import { Post, PostCreate } from '../post';
 
-@injectable()
 export class MockPostRepository implements IPostRepository {
   private posts: Post[] = [
     { id: 1, userId: 1, title: 'Post 1', body: 'Content of Post 1' },
